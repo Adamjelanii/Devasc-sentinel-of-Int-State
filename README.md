@@ -58,7 +58,7 @@
         print(f"Error: {e}")
         sys.exit(1)
 
-def disable_interfaces(interfaces):
+    def disable_interfaces(interfaces):
     if not interfaces:
         print("\nTidak ada interface yang perlu dinonaktifkan.")
         return
