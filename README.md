@@ -58,14 +58,14 @@
         print(f"Error: {e}")
         sys.exit(1)
 
-    def disable_interfaces(interfaces):
-    if not interfaces:
-        print("\nTidak ada interface yang perlu dinonaktifkan.")
+        def disable_interfaces(interfaces):
+        if not interfaces:
+            print("\nTidak ada interface yang perlu dinonaktifkan.")
         return
 
-    print(f"\nInterface berikut akan dinonaktifkan: {', '.join(interfaces)}")
+        print(f"\nInterface berikut akan dinonaktifkan: {', '.join(interfaces)}")
 
-    for iface in interfaces:
+        for iface in interfaces:
         print(f"Menjalankan: sudo ip link set {iface} down")
         try:
             subprocess.run(
@@ -80,22 +80,22 @@
             print("Error: Perintah 'sudo' atau 'ip' tidak ditemukan.")
             break
             
-def main():
-    import os
-    if os.geteuid() != 0:
+        def main():
+        import os
+        if os.geteuid() != 0:
         print("Error: Skrip ini perlu dijalankan dengan hak sudo untuk mengubah pengaturan jaringan.")
         print("Silakan jalankan dengan: sudo python3 disable_linux_ports.py")
         sys.exit(1)
 
-    interfaces = get_interfaces_to_disable()
-    disable_interfaces(interfaces)
+            interfaces = get_interfaces_to_disable()
+        disable_interfaces(interfaces)
     
-    if interfaces:
+        if interfaces:
         print("\nVerifikasi: Menjalankan 'ip link show' lagi...")
         subprocess.run(['ip', 'link', 'show'])
 
-if __name__ == "__main__":
-    main()
+        if __name__ == "__main__":
+        main()
   
 **#Menjalankan Program**
 devasc@labvm:~$ sudo python3 disable_linux_ports.py
