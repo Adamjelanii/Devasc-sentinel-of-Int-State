@@ -8,9 +8,6 @@ devasc@labvm:~$ ip link show
 devasc@labvm:~$ nano disable_linux_ports.py
 
 **#program yang digunakan**
-
-
-
 import subprocess
 import json
 import sys
