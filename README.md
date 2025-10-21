@@ -13,11 +13,6 @@ import json
 import sys
 
 def get_interfaces_to_disable():
-    """
-    Mencari interface yang administratively 'UP' tapi
-    tidak memiliki koneksi (LOWER_UP 'down').
-    Ini setara dengan status 'down' (protocol) di Cisco.
-    """
     print("Mengecek status interface lokal...")
     try:
         # Jalankan 'ip -j link show' untuk mendapatkan output JSON
@@ -45,10 +40,7 @@ def get_interfaces_to_disable():
             # Abaikan 'lo' (loopback)
             if ifname == 'lo':
                 continue
-
-            # Target kita adalah:
-            # 1. Administratively UP (ada flag 'UP')
-            # 2. Tapi secara operasional TIDAK UP (kabel tidak tercolok, dll)
+                
             if 'UP' in flags and operstate != 'UP':
                 interfaces_to_shutdown.append(ifname)
                 
@@ -66,9 +58,6 @@ def get_interfaces_to_disable():
         sys.exit(1)
 
 def disable_interfaces(interfaces):
-    """
-    Menjalankan 'sudo ip link set <iface> down' untuk setiap interface
-    """
     if not interfaces:
         print("\nTidak ada interface yang perlu dinonaktifkan.")
         return
@@ -78,7 +67,6 @@ def disable_interfaces(interfaces):
     for iface in interfaces:
         print(f"Menjalankan: sudo ip link set {iface} down")
         try:
-            # Perintah ini membutuhkan hak sudo untuk berjalan
             subprocess.run(
                 ['sudo', 'ip', 'link', 'set', iface, 'down'], 
                 check=True
@@ -92,7 +80,6 @@ def disable_interfaces(interfaces):
             break
             
 def main():
-    # Cek apakah skrip dijalankan sebagai root (dengan sudo)
     import os
     if os.geteuid() != 0:
         print("Error: Skrip ini perlu dijalankan dengan hak sudo untuk mengubah pengaturan jaringan.")
