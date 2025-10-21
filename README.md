@@ -9,11 +9,11 @@ devasc@labvm:~$ nano disable_linux_ports.py
 
 **#program yang digunakan**
 
-import subprocess
-import json
-import sys
+    import subprocess
+    import json
+    import sys
 
-def get_interfaces_to_disable():
+    def get_interfaces_to_disable():
     print("Mengecek status interface lokal...")
     try:
         # Jalankan 'ip -j link show' untuk mendapatkan output JSON
